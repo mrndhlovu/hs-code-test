@@ -14,13 +14,25 @@ jobs:
         node-version: [15.x]
 
     steps:
-      - uses: actions/checkout@v2
-
+      
+      - name: Build
+        uses: actions/checkout@v2    
         with:
-          submodules: true
-          persist-credentials: false
-          token: ${{ secrets.PAT }}
+            persist-credentials: false
+            token: ${{ secrets.PAT }}
 
       - run: npm install
       - run: npm run build
-      - run: Cypress run
+        
+      
+      - name: Cypress Test
+        uses: cypress-io/github-action@v2
+        with:
+            persist-credentials: false
+            token: ${{ secrets.PAT }}
+            browser: chrome
+        
+
+      
+
+
