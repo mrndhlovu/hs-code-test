@@ -1,38 +1,17 @@
 name: hs-test
 
-on:
-  push:
-    branches:
-      - main
+on: [push]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [15.x]
-
     steps:
-      
-      - name: Build
-        uses: actions/checkout@v2    
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
-            persist-credentials: false
-            token: ${{ secrets.PAT }}
-
-      - run: npm install
-      - run: npm run build
-        
-      
-      - name: Cypress Test
+          persist-credentials: false
+          token: ${{ secrets.PAT }}
+      - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-            persist-credentials: false
-            token: ${{ secrets.PAT }}
-            browser: chrome
-        
-
-      
-
-
+          start: npm run start
