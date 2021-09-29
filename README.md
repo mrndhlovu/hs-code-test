@@ -4,18 +4,18 @@
 
 ### Setup
 
-- [] (Setup React)
-- [] (Add Webpack)
-- [] (Add SCSS)
-- [] (Add Prettier)
-- [] (Add Github actions)
-- [] (Add Cypress)
+- [ ] (Setup React)
+- [ ] (Add Webpack)
+- [ ] (Add SCSS)
+- [ ] (Add Prettier)
+- [ ] (Add Github actions)
+- [ ] (Add Cypress)
 
 ### Code
 
-- [] (Exercise 1)
-- [] (Exercise 2)
+- [ ] (Exercise 1)
+- [ ] (Exercise 2)
 
 ### Deploy
 
-- [] (Deploy to netlify)
+- [ ] (Deploy to netlify)
