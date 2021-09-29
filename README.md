@@ -2,16 +2,16 @@
 
 ## Todos
 
-Live ![URL](https://6154196ed2b5f6bf8fae74ec--hs-test.netlify.app/)
+Live [URL](https://6154196ed2b5f6bf8fae74ec--hs-test.netlify.app/)
 
 ### Setup
 
-- [ ] (Setup React)
-- [ ] (Add Webpack)
-- [ ] (Add SCSS)
-- [ ] (Add Prettier)
+- [x] (Setup React)
+- [x] (Add Webpack)
+- [x] (Add SCSS)
+- [x] (Add Prettier)
 - [ ] (Add Github actions)
-- [ ] (Add Cypress)
+- [x] (Add Cypress)
 
 ### Code
 
