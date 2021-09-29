@@ -1,8 +1,9 @@
-# HubSpot Code Test
+# HubSpot Code Test [![hs-test](https://github.com/mrndhlovu/hs-code-test/actions/workflows/hs-test.yml/badge.svg)](https://github.com/mrndhlovu/hs-code-test/actions/workflows/hs-test.yml)
 
 ## Todos
 
 Live [URL](https://6154196ed2b5f6bf8fae74ec--hs-test.netlify.app/)
+
 
 ### Setup
 
