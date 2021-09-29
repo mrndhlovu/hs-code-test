@@ -1,3 +1,4 @@
+import ReactDOM from "react-dom"
 import React, {
   createContext,
   useEffect,
@@ -5,9 +6,11 @@ import React, {
   useContext,
   useRef,
 } from "react"
-import ReactDOM from "react-dom"
 
 import "../styles/index.scss"
+
+const IMAGE_NOT_FOUND_PLACEHOLDER =
+  "https://res.cloudinary.com/drxavrtbi/image/upload/v1633025966/projects/not-found-image-15383864787lu_bietqg.jpg"
 
 const DATA_ENDPOINT =
   "https://raw.githubusercontent.com/HubSpotWebTeam/CodeExercise/main/src/js/data/data.json"
@@ -166,8 +169,7 @@ const ExerciseTwoContextProvider = ({ children }) => {
 
 const RadioButton = ({ name, handleChange, label, checked }) => {
   return (
-    <div>
-      <label htmlFor={name}>{label}</label>
+    <div className="ui-radio-btn">
       <input
         name={name}
         type="radio"
@@ -175,6 +177,44 @@ const RadioButton = ({ name, handleChange, label, checked }) => {
         checked={checked}
         id={name}
       />
+      <label htmlFor={name}>{label}</label>
+    </div>
+  )
+}
+
+const Image = ({ item }) => {
+  const [isLoading, setIsLoading] = useState(true)
+  const [imageError, setImageError] = useState(false)
+
+  const toggleIsLoading = () => setIsLoading(false)
+  const toggleImageError = () => {
+    setImageError(true)
+    setIsLoading(false)
+  }
+
+  return (
+    <div className="img-container">
+      <div className="img-wrapper">
+        {isLoading && <div className="image-skeleton loading" />}
+        {imageError ? (
+          <img src={IMAGE_NOT_FOUND_PLACEHOLDER} />
+        ) : (
+          <img
+            onError={toggleImageError}
+            onLoad={toggleIsLoading}
+            src={item.poster}
+          />
+        )}
+      </div>
+      <div className="img-detail">
+        <span>{`${item.title} (${item.year})`}</span>
+        <div>
+          <span>Genres</span>
+          {item.genre.map((genre, index) => (
+            <span key={index}>, {genre}</span>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
@@ -186,15 +226,25 @@ const SelectFilter = ({
   onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const toggleOpenState = () => setIsOpen((prev) => !prev)
+  const listOptionsRef = useRef()
+
+  const toggleOpenState = () => {
+    setIsOpen((prev) => !prev)
+  }
 
   return (
-    <div className="select-checkbox-container">
-      <select onMouseDown={toggleOpenState} selected={name}>
-        <option value={name}>{name}</option>
+    <div className={`ui-select ${name}`}>
+      <select onMouseDown={toggleOpenState} defaultValue={name}>
+        <option className="hide-option" disabled defaultValue={name}>
+          {name}
+        </option>
       </select>
       {isOpen && (
-        <div className="checkbox-list" onMouseLeave={toggleOpenState}>
+        <div
+          ref={listOptionsRef}
+          className="checkbox-list"
+          onMouseLeave={toggleOpenState}
+        >
           {options.map((option, index) => {
             const isChecked = selectedOptions.includes(option)
 
@@ -245,8 +295,8 @@ const FilterOptions = () => {
           onChange={handleSelectedFilterOption}
         />
       </div>
-      <div className="media-block-search">
-        <input onChange={handleChange}></input>
+      <div className="media-block-search search-input-container">
+        <input className="ui-input" onChange={handleChange}></input>
       </div>
     </div>
   )
@@ -258,35 +308,37 @@ const ExerciseTwo = () => {
 
   return (
     <div className="media-block">
-      <div className="media-block-header">
-        <FilterOptions />
+      <div className="media-block-wrapper">
+        <div className="media-block-header">
+          <FilterOptions />
 
-        <div className="media-block-filter-options">
-          <div className="media-block-radio-options">
-            <RadioButton
-              name="movie"
-              label="Movies"
-              handleChange={toggleActiveMediaType}
-              checked={filters.type === "movie"}
-            />
-            <RadioButton
-              name="book"
-              label="Books"
-              handleChange={toggleActiveMediaType}
-              checked={filters.type === "book"}
-            />
-          </div>
-          <div className="media-block-clear-filters">
-            <button onClick={handleClearFilters}>Clear Filters</button>
+          <div className="media-block-filter-options">
+            <div className="media-block-radio-options">
+              <RadioButton
+                name="movie"
+                label="Movies"
+                handleChange={toggleActiveMediaType}
+                checked={filters.type === "movie"}
+              />
+              <RadioButton
+                name="book"
+                label="Books"
+                handleChange={toggleActiveMediaType}
+                checked={filters.type === "book"}
+              />
+            </div>
+            <div className="media-block-clear-filters">
+              <button className="ui-link-btn" onClick={handleClearFilters}>
+                Clear Filters
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="media-block-content">
-        {data.map((item, index) => (
-          <div key={index}>
-            <img src={item.poster} />
-          </div>
-        ))}
+        <div className="media-block-content">
+          {data.map((item, index) => (
+            <Image key={index} item={item} />
+          ))}
+        </div>
       </div>
     </div>
   )

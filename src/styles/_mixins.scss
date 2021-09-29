@@ -40,13 +40,6 @@
   }
 }
 
-@mixin lineClamp($numberOfLines: 3) {
-  display: -webkit-box;
-  -webkit-line-clamp: $numberOfLines;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
 @mixin mobile {
   @media (max-width: #{$device-mobile}) {
     @content;
@@ -72,7 +65,7 @@
 }
 
 @mixin desktop {
-  @media (min-width: #{$device-desktop}) {
+  @media (max-width: #{$device-desktop}) {
     @content;
   }
 }

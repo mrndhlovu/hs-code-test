@@ -6,6 +6,110 @@
   background-color: $blue;
 }
 
+.ui-radio-btn {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+
+  label {
+    font-weight: map_get($fontWeight, "bold");
+    color: $textGrey;
+    padding-left: 0.5rem;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+    cursor: pointer;
+    height: 1.5rem;
+    width: 1.5rem;
+    background-color: $orange;
+  }
+}
+
+.ui-link-btn {
+  border: none;
+  background-color: transparent;
+  text-transform: uppercase;
+  color: $blue;
+  text-decoration: underline;
+  font-weight: map_get($fontWeight, "bold");
+  cursor: pointer;
+
+  @include hoverTransition("color");
+  @include hoverEffect($orange);
+}
+
+.ui-select {
+  min-height: 3rem;
+  min-width: 10rem;
+  background: $lightBorder;
+  border-bottom: 0.1rem solid $lightBorder;
+  position: relative;
+
+  select {
+    height: 100%;
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    outline: 0;
+    text-transform: uppercase;
+    font-weight: map_get($fontWeight, "bold");
+    background-color: $lightBorder;
+    color: $textGrey;
+  }
+
+  .checkbox-list {
+    display: grid;
+    position: absolute;
+    bottom: -23.5rem;
+    background: white;
+    width: max-content;
+    z-index: 10;
+    border-radius: 0.3rem;
+    border: 1px solid $gray;
+    padding-top: 1rem;
+
+    label {
+      min-width: 7rem;
+      padding: 0.5rem;
+      border-bottom: 1px solid $gray;
+      text-transform: uppercase;
+      font-weight: map_get($fontWeight, "bold");
+      color: $textGrey;
+    }
+
+    input {
+      cursor: pointer;
+      margin-right: 1rem;
+    }
+
+    &::before {
+      content: "";
+      width: 2rem;
+      height: 2rem;
+      transform: rotate(45deg);
+      border-top: 0.1rem solid $gray;
+      border-left: 0.1rem solid $gray;
+      left: 0.5rem;
+      position: absolute;
+      top: -1rem;
+      left: 1.5rem;
+      background: white;
+      z-index: 1;
+    }
+  }
+}
+
+.ui-input {
+  border: 0.1rem solid $gray;
+  height: 3rem;
+  border-radius: 0.3rem;
+  position: relative;
+}
+
 .testimonial-block {
   margin: 0 auto;
   min-height: 30vh;
@@ -126,29 +230,198 @@
 }
 
 .media-block {
-  min-height: 70vh;
-  margin: 0 auto;
-
-  &-block-header {
-    min-height: 5rem;
-  }
 }
 
 #exercise-two-root {
   .media-block {
-    .select-checkbox-container {
-      .checkbox-list {
-        display: grid;
+    width: calc(57vw + 20rem);
+    margin: 0 auto;
+
+    &-wrapper {
+      margin: 0 auto;
+      border-radius: 0.3rem;
+      border: 2px solid $gray;
+    }
+
+    &-header {
+      min-height: 12vh;
+      padding: 1.5rem;
+      display: grid;
+    }
+
+    &-filter-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      place-content: center;
+    }
+
+    &-select-options,
+    &-radio-options {
+      display: flex;
+      width: max-content;
+    }
+
+    .search-input-container {
+      position: relative;
+
+      input {
+        min-width: 250px;
+      }
+
+      &::after {
+        content: "\260C";
+        color: $textGrey;
+        font-size: 2rem;
+        position: absolute;
+        right: 0.3rem;
+        top: 0.2rem;
+        transform: rotate(105deg);
+      }
+    }
+    &-select-options {
+      gap: 2rem;
+    }
+
+    &-clear-filters,
+    &-search {
+      place-self: end;
+    }
+
+    .hide-option {
+      display: none;
+    }
+
+    .ui-select.genre {
+      label {
+        min-width: 11rem;
       }
     }
 
     &-content {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, 30%);
+      border-top: 1px solid$gray;
+      padding: 1.5rem;
+      width: 100%;
+      position: relative;
+      place-content: center;
+      justify-content: space-between;
 
-      img {
-        max-width: 200px;
+      .img-container {
+        min-height: 100%;
+        min-width: 100%;
+        height: max-content;
+        margin: 0 auto;
+        display: grid;
+        padding-bottom: 3rem;
+        height: max-content;
+        justify-content: space-between;
+
+        .img-wrapper {
+          width: 100%;
+          height: 100%;
+          position: relative;
+
+          .image-skeleton {
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            background-color: $gray;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+          }
+
+          .image-skeleton.loading {
+            &::before {
+              content: "";
+              border: 0.2rem solid $lightBorder;
+              border-radius: 45%;
+              width: 2rem;
+              height: 2rem;
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              animation: rotate 2s linear infinite;
+              outline: 1;
+            }
+          }
+        }
+
+        img {
+          width: 100%;
+          height: max-content;
+        }
+
+        &:hover {
+          transform: scale(1.02);
+
+          @include hoverTransition("scale");
+        }
+      }
+      .img-detail {
+        min-height: 5vh;
+        max-height: 5vh;
+        display: grid;
+        padding: 1rem 0;
+        gap: 0.5rem;
+
+        span {
+          font-size: 1.4rem;
+          font-weight: map_get($fontWeight, "bold");
+          color: $textGrey;
+          text-transform: capitalize;
+        }
+      }
+    }
+  }
+
+  @include desktop {
+    .media-block {
+      width: calc(57vw + 33rem);
+    }
+
+    .img-detail {
+      span {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  @include tablet {
+    .media-block {
+      width: 100%;
+
+      &-content {
+        display: flex;
+        flex-wrap: wrap;
+
+        .img-container {
+          max-width: 320px;
+          min-width: 320px;
+        }
+      }
+    }
+  }
+
+  @include mobile {
+    .media-block {
+      &-filter-options {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      &-clear-filters,
+      &-search {
+        place-self: start;
+        width: 100%;
+        margin: 1rem 0;
+        .ui-input {
+          width: 100%;
+        }
       }
     }
   }
