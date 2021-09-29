@@ -1,0 +1,21 @@
+@mixin flexCenter($direction) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
+}
+
+@mixin hoverTransition($property) {
+  transition: 500ms !important;
+  transition-property: $property;
+  transition-timing-function: ease-in-out;
+}
+
+@mixin hoverText($color) {
+  &:hover {
+    color: $color;
+    transition-duration: 500ms;
+    transition-property: color;
+    transition-timing-function: ease-in-out;
+  }
+}

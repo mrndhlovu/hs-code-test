@@ -2,6 +2,8 @@
 
 ## Todos
 
+Live ![URL](https://6154196ed2b5f6bf8fae74ec--hs-test.netlify.app/)
+
 ### Setup
 
 - [ ] (Setup React)
@@ -18,4 +20,5 @@
 
 ### Deploy
 
-- [ ] (Deploy to netlify)
+- [ ] (Browser tests)
+- [x] (Deploy to netlify)
