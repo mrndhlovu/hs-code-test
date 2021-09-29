@@ -6,9 +6,14 @@ body {
   top: 0;
   margin: 0;
   height: 100vh;
-  font-size: map_get($fontSize, "normal");
 }
 
-* {
+html {
+  font-size: map_get($fontSize, "default");
+}
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }

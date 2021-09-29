@@ -1,6 +1,7 @@
 $white: #fff;
 $blue: #00a4bd;
 $orange: #f56b27;
+$textGrey: #00000091;
 
 $font: (
   primary: Roboto,
@@ -9,13 +10,16 @@ $font: (
 
 $fontWeight: (
   bold: 700,
-  light: 100,
-  medium: 500,
+  medium: 300,
   regular: 400,
-  semi-bold: 600,
-  x-bold: 900,
 );
 
 $fontSize: (
-  normal: 14px,
+  default: 62.5%,
 );
+
+$device-mobile: 411px;
+$device-lgMobile: 480px;
+$device-xsMobile: 320px;
+$device-tablet: 768px;
+$device-desktop: 1024px;

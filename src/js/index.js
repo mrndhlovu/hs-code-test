@@ -16,18 +16,19 @@ const ExerciseOne = () => {
     <div>
       <Header headerText="Exercise 1 - Testimonial Block" />
       <div className="testimonial-block">
-        <div className="testimonial-block-text">
+        <div className="testimonial-block-content">
           <p>
             Gingerbread tart cupcake cake muffin cookie liquorice tiramisu.
             Toffee cupcake cake cake croissant icing carrot cake cookie. Dessert
             chocolate bar apple pie sesame snaps liquorice carrot cake cookie
-            danish.
+            danish. chocolate bar apple pie sesame snaps liquorice carrot cake
+            cookie danish.
           </p>
-          <span className="testimonial-block-name">
+          <span className="testimonial-block-user-detail">
             Indiana Jones, Archaeologist
           </span>
         </div>
-        <a className="testimonial-block-link">Tell Me More</a>
+        <a className="testimonial-block-cta-button">Tell Me More</a>
       </div>
     </div>
   )

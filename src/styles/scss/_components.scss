@@ -5,3 +5,122 @@
   color: $white;
   background-color: $blue;
 }
+
+.testimonial-block {
+  margin: 0 auto;
+  min-height: 30vh;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  align-items: center;
+  width: max-content;
+  place-items: center;
+
+  &-content {
+    font-size: calc(0.5vw + 1rem);
+    position: relative;
+    border-left: 0.2rem solid $orange;
+    display: grid;
+    gap: 1rem;
+
+    p {
+      font-family: map_get($font, "primary");
+      color: $textGrey;
+      font-size: 1.3em;
+      line-height: 2.5rem;
+      max-width: 45ch;
+      margin-left: 2rem;
+      margin-top: 0;
+    }
+
+    &::before {
+      content: "\201C";
+      position: absolute;
+      width: 0.3rem;
+      background-color: $orange;
+      height: 3rem;
+      width: 3rem;
+      left: -1.5rem;
+      border-radius: 50%;
+      top: -3.2rem;
+      color: $white;
+      font-size: 4.5rem;
+      text-align: center;
+      font-family: map_get($font, "primary");
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 0.3rem;
+      background-color: $orange;
+      height: 0.7rem;
+      width: 0.7rem;
+      left: -0.497rem;
+      border-radius: 50%;
+      bottom: 0;
+    }
+  }
+
+  &-cta-button {
+    @include linkButton();
+    cursor: pointer;
+    background-color: $blue;
+    color: $white;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+  }
+
+  &-user-detail {
+    font-weight: map_get($fontWeight, "bold");
+    font-size: 1.2rem;
+    color: $textGrey;
+    margin-left: 2rem;
+  }
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    grid-gap: 2rem;
+    place-items: flex-start;
+    padding-top: 3.5rem;
+
+    p {
+      max-width: 55ch;
+    }
+
+    &-cta-button {
+      margin-left: 2rem;
+    }
+  }
+
+  @include lgMobile {
+    p {
+      max-width: 33ch;
+    }
+  }
+
+  @include xsMobile {
+    &-content {
+      border-left: none;
+
+      p {
+        max-width: 90vw;
+      }
+
+      &::before {
+        left: -1.2rem;
+        top: -3rem;
+        background-color: transparent;
+        color: $orange;
+      }
+      &::after {
+        display: none;
+      }
+    }
+
+    &-cta-button,
+    &-user-detail,
+    p {
+      margin-left: 0;
+    }
+  }
+}
