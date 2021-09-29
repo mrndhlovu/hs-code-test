@@ -1,0 +1,36 @@
+name: hs-test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [15.x]
+
+    steps:
+      - uses: actions/checkout@v2
+
+        with:
+          submodules: true
+          persist-credentials: false
+          token: ${{ secrets.PAT }}
+
+      - run: npm install
+      - run: npm run build
+      - run: Cypress run
+
+      - uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --follow-symlinks --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.S3_BUCKET_AWS }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID_AWS }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY_AWS }}
+          AWS_REGION: ${{ secrets.REGION_AWS }}
+          SOURCE_DIR: "build"

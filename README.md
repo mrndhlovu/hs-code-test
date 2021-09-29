@@ -18,4 +18,5 @@
 
 ### Deploy
 
+- [ ] (Browser tests)
 - [ ] (Deploy to netlify)
