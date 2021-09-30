@@ -8,7 +8,8 @@ _your answer here_
 
 ## How did you deviate from the directions, if at all, and why?
 
-_your answer here_
+Run out of time to focus on tests.
+Big mistake starting with exercise one, wasted a time on it.
 
 ## Is there anything else you'd like to let us know?
 
