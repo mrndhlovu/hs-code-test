@@ -12,4 +12,5 @@ _your answer here_
 
 ## Is there anything else you'd like to let us know?
 
-_your answer here_
+[Ref](https://github.com/HubSpotWebTeam/CodeExercise#:~:text=Should%20I%20create,separate%20the%20exercises.)
+When one is used to splitting code onto separate pages, writing everything on one page can be confusing.
