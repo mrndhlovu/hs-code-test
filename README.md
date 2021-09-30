@@ -6,7 +6,7 @@ Live [URL](https://6154196ed2b5f6bf8fae74ec--hs-test.netlify.app/)
 
 ### Setup
 
-- [ ] (Setup React)
+- [x] (Setup React)
 - [ ] (Add Webpack)
 - [x] (Add SCSS)
 - [x] (Add Prettier)
