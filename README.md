@@ -6,17 +6,17 @@ Live [URL](https://6154196ed2b5f6bf8fae74ec--hs-test.netlify.app/)
 
 ### Setup
 
-- [x] (Setup React)
-- [x] (Add Webpack)
+- [ ] (Setup React)
+- [ ] (Add Webpack)
 - [x] (Add SCSS)
 - [x] (Add Prettier)
-- [ ] (Add Github actions)
+- [x] (Add Github actions)
 - [x] (Add Cypress)
 
 ### Code
 
-- [ ] (Exercise 1) [Pull request](https://github.com/mrndhlovu/hs-code-test/pull/2)
-- [ ] (Exercise 2)
+- [ ] (Exercise 1) [PULL_REQUEST](https://github.com/mrndhlovu/hs-code-test/pull/2)
+- [ ] (Exercise 2) [PULL_REQUEST](https://github.com/mrndhlovu/hs-code-test/pull/3)
 
 ### Deploy
 

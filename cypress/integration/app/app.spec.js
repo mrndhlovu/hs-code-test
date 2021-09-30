@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe("App", () => {
+describe("Homepage", () => {
   it("loads the app properly", () => {
     cy.on("uncaught:exception", (err, runnable) => {
       return false

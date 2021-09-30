@@ -1,10 +1,10 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const HtmlWebPackPlugin = require("html-webpack-plugin")
 
-const path = require("path");
+const path = require("path")
 
 module.exports = {
   entry: {
-    main: ["./src/js/index.js", "./src/styles/scss/index.scss"],
+    main: ["./src/js/index.js", "./src/styles/index.scss"],
   },
   output: {
     path: path.join(__dirname, "build"),
@@ -20,7 +20,6 @@ module.exports = {
       },
       {
         test: /\.html$/,
-
         use: [
           {
             loader: "html-loader",
@@ -43,9 +42,9 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./src/static/template.html",
+      template: "./src/views/template.html",
       filename: "./index.html",
-      favicon: "./src/static/favicon.ico",
+      favicon: "./src/views/favicon.ico",
     }),
   ],
-};
+}

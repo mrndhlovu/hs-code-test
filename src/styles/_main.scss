@@ -1,0 +1,34 @@
+body {
+  font-family: map_get($font, "primary"), map_get($font, "secondary"),
+    "sans-serif";
+  position: relative;
+  left: 0;
+  top: 0;
+  margin: 0;
+  height: 100vh;
+}
+
+html {
+  font-size: map_get($fontSize, "default");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+*::-webkit-scrollbar-track {
+  border-radius: 1rem;
+  background-color: #383838;
+}
+
+*::-webkit-scrollbar {
+  width: 0.5rem;
+  background-color: #383838;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+  background-color: #6b6b6b;
+}

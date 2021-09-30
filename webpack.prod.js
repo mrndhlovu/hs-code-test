@@ -1,8 +1,9 @@
-const { merge } = require("webpack-merge");
+const { merge } = require("webpack-merge")
 
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 
-const shared = require("./webpack.common");
+const shared = require("./webpack.common")
 
 module.exports = merge(shared, {
   mode: "production",
@@ -29,5 +30,6 @@ module.exports = merge(shared, {
     new MiniCssExtractPlugin({
       filename: "[name].css",
     }),
+    new CleanWebpackPlugin(),
   ],
-});
+})

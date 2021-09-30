@@ -1,0 +1,78 @@
+@mixin flexCenter($direction) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
+}
+
+@mixin hoverTransition($property) {
+  transition: 500ms !important;
+  transition-property: $property;
+  transition-timing-function: ease-in-out;
+}
+
+@mixin hoverEffect($color) {
+  &:hover {
+    color: $color;
+    transition-duration: 500ms;
+    transition-property: color;
+    transition-timing-function: ease-in-out;
+  }
+}
+
+@mixin linkButton($color: "white") {
+  @include hoverTransition("background-color");
+  background-color: $blue;
+  text-align: center;
+  border-radius: 0.3rem;
+  transition: 0.3s ease-in-out;
+  display: inline-block;
+  text-decoration: none;
+  padding: 2rem 4rem;
+  border: 0;
+  font-weight: map_get($fontWeight, "bold");
+  line-height: 1.5rem;
+  width: max-content;
+
+  &:hover {
+    opacity: 0.8;
+    color: aliceblue;
+  }
+}
+
+@mixin lineClamp($numberOfLines: 3) {
+  display: -webkit-box;
+  -webkit-line-clamp: $numberOfLines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@mixin mobile {
+  @media (max-width: #{$device-mobile}) {
+    @content;
+  }
+}
+
+@mixin lgMobile {
+  @media (max-width: #{$device-lgMobile}) {
+    @content;
+  }
+}
+
+@mixin xsMobile {
+  @media (max-width: #{$device-lgMobile}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: #{$device-tablet}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$device-desktop}) {
+    @content;
+  }
+}
