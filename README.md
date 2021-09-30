@@ -11,12 +11,7 @@ Live [URL](https://6154196ed2b5f6bf8fae74ec--hs-test.netlify.app/)
 - [x] (Add SCSS)
 - [x] (Add Prettier)
 - [x] (Add Github actions)
-- [x] (Add Cypress)
-
-### Code
-
-- [ ] (Exercise 1) [PULL_REQUEST](https://github.com/mrndhlovu/hs-code-test/pull/2)
-- [ ] (Exercise 2) [PULL_REQUEST](https://github.com/mrndhlovu/hs-code-test/pull/3)
+- [ ] (Add Cypress tests)
 
 ### Deploy
 
