@@ -2,7 +2,7 @@
 
 ## Todos
 
-Live [URL](https://6154196ed2b5f6bf8fae74ec--hs-test.netlify.app/)
+Live [URL](https://hs-test.netlify.app)
 
 ### Setup
 
