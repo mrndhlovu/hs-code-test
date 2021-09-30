@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom"
 import React, {
   createContext,
   useEffect,
@@ -6,6 +5,8 @@ import React, {
   useContext,
   useRef,
 } from "react"
+import ReactDOM from "react-dom"
+import PropTypes from "proptypes"
 
 import "../styles/index.scss"
 
@@ -14,59 +15,6 @@ const IMAGE_NOT_FOUND_PLACEHOLDER =
 
 const DATA_ENDPOINT =
   "https://raw.githubusercontent.com/HubSpotWebTeam/CodeExercise/main/src/js/data/data.json"
-
-const clientRequestData = async () => {
-  return await fetch(DATA_ENDPOINT)
-    .then((response) => {
-      if (response.ok) {
-        const responseData = response.json()
-        return responseData
-      }
-      return
-    })
-    .catch((error) => {
-      return error.message
-    })
-}
-
-const filterData = (data, filterOptions) => {
-  console.log(filterOptions)
-  const hasGenreFilter = filterOptions.genre
-  const hasYearFilter = filterOptions.year
-  const hasTypeFilter = filterOptions.type
-  let dataCopy = []
-
-  if (hasTypeFilter) {
-    dataCopy = [
-      ...dataCopy,
-      ...data.filter((item) => item.type !== filterOptions.type),
-    ]
-  }
-
-  if (hasGenreFilter) {
-    dataCopy = [
-      ...dataCopy,
-      ...data.filter((item) =>
-        item.genre.some((value) => filterOptions.genre.includes(value))
-      ),
-    ]
-  }
-
-  if (hasYearFilter) {
-    dataCopy = [
-      ...dataCopy,
-      ...data.filter((item) => filterOptions.year.includes(item.year)),
-    ]
-  }
-
-  return dataCopy
-}
-
-const FILTERS_INITIAL_STATE = {
-  genre: [],
-  year: [],
-  type: "",
-}
 
 const GET_GENRE_OPTIONS = [
   "action",
@@ -96,8 +44,73 @@ const usePrevious = (value) => {
   return ref.current
 }
 
+const clientRequestData = async () => {
+  return await fetch(DATA_ENDPOINT)
+    .then((response) => {
+      if (response.ok) {
+        const responseData = response.json()
+        return responseData
+      }
+      return
+    })
+    .catch((error) => {
+      return error.message
+    })
+}
+
+const getNewData = (data, filterOptions) => {
+  const hasGenreFilter = filterOptions.genre.length > 0
+  const hasYearFilter = filterOptions.year.length > 0
+  const hasTypeFilter = filterOptions.type !== ""
+
+  let dataCopy = []
+
+  if (hasGenreFilter) {
+    dataCopy = [
+      ...dataCopy,
+      ...data.filter((item) =>
+        item.genre.some(
+          (value) =>
+            filterOptions.genre.includes(value) && dataCopy.indexOf(item) === -1
+        )
+      ),
+    ]
+  }
+
+  if (hasYearFilter) {
+    dataCopy = [
+      ...dataCopy,
+      ...data.filter(
+        (item) =>
+          filterOptions.year.includes(item.year) &&
+          dataCopy.indexOf(item) === -1
+      ),
+    ]
+  }
+
+  if (hasTypeFilter) {
+    if (dataCopy.length === 0) {
+      dataCopy = data
+    }
+    dataCopy = [...dataCopy.filter((item) => item.type === filterOptions.type)]
+  }
+
+  return dataCopy
+}
+
+const sortData = (data = []) => {
+  return data.sort((a, b) => a?.title.localeCompare(b?.title))
+}
+
 const ExerciseTwoContext = createContext(null)
 const useExerciseContext = () => useContext(ExerciseTwoContext)
+
+const FILTERS_INITIAL_STATE = {
+  genre: [],
+  year: [],
+  type: "",
+  searchQuery: "",
+}
 
 const ExerciseTwoContextProvider = ({ children }) => {
   const [data, setData] = useState([])
@@ -105,22 +118,22 @@ const ExerciseTwoContextProvider = ({ children }) => {
   const [filters, setFilters] = useState(FILTERS_INITIAL_STATE)
   const previous = usePrevious(filters)
 
-  const hasFilteredData =
+  const hasAppliedFilter =
     filters.genre.length > 0 || filters.year.length > 0 || filters.type !== ""
 
-  const filteredDataIsEmpty = filteredData.length < 1
-
-  const newFilter = hasFilteredData
+  const newFilter = hasAppliedFilter
     ? Object.keys(previous).find(
         (prevKey) => previous[prevKey] !== filters[prevKey]
       )
     : undefined
 
-  const toggleActiveMediaType = (ev) =>
+  const toggleActiveMediaType = (ev) => {
     setFilters((prev) => ({ ...prev, type: ev.target.id }))
+  }
 
   const handleClearFilters = () => {
     setFilters(FILTERS_INITIAL_STATE)
+    setFilteredData(data)
   }
 
   const handleSelectedFilterOption = (ev) => {
@@ -134,32 +147,37 @@ const ExerciseTwoContextProvider = ({ children }) => {
     }))
   }
 
+  const filterByQuery = (searchTerm) => {
+    const searchResults = data.filter((item) => {
+      return item.title.toLowerCase().indexOf(searchTerm) !== -1
+    })
+
+    return setFilteredData(searchResults)
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await clientRequestData()
-      setData(response.media)
+      setData(sortData(response.media))
+      setFilteredData(sortData(response.media))
     }
     fetchData()
   }, [])
 
   useEffect(() => {
     if (!newFilter) return
-    setFilteredData(
-      filterData(data, {
-        [newFilter]: filters?.[newFilter],
-        type: filters.type,
-      })
-    )
-  }, [filters, newFilter, filteredDataIsEmpty, data])
+    setFilteredData(getNewData(data, filters))
+  }, [filters, data, newFilter])
 
   return (
     <ExerciseTwoContext.Provider
       value={{
-        data: filteredDataIsEmpty ? data : filteredData,
+        data: filteredData,
         filters,
         handleClearFilters,
         handleSelectedFilterOption,
         toggleActiveMediaType,
+        filterByQuery,
       }}
     >
       {children}
@@ -180,6 +198,14 @@ const RadioButton = ({ name, handleChange, label, checked }) => {
       <label htmlFor={name}>{label}</label>
     </div>
   )
+}
+
+RadioButton.protoTypes = {
+  onChange: PropTypes.func.isRequired,
+  checked: PropTypes.bool.isRequired,
+  label: PropTypes.string.isRequired,
+  handle: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
 }
 
 const Image = ({ item }) => {
@@ -203,6 +229,7 @@ const Image = ({ item }) => {
             onError={toggleImageError}
             onLoad={toggleIsLoading}
             src={item.poster}
+            alt={item.title}
           />
         )}
       </div>
@@ -219,6 +246,16 @@ const Image = ({ item }) => {
   )
 }
 
+Image.protoTypes = {
+  item: PropTypes.shape({
+    genre: PropTypes.arrayOf(PropTypes.string),
+    poster: PropTypes.string,
+    title: PropTypes.string,
+    type: PropTypes.string,
+    year: PropTypes.string,
+  }),
+}
+
 const SelectFilter = ({
   options = [],
   selectedOptions = [],
@@ -228,15 +265,17 @@ const SelectFilter = ({
   const [isOpen, setIsOpen] = useState(false)
   const listOptionsRef = useRef()
 
+  const displayValue = `${options.length} ${name}`
+
   const toggleOpenState = () => {
     setIsOpen((prev) => !prev)
   }
 
   return (
     <div className={`ui-select ${name}`}>
-      <select onMouseDown={toggleOpenState} defaultValue={name}>
-        <option className="hide-option" disabled defaultValue={name}>
-          {name}
+      <select onMouseDown={toggleOpenState} defaultValue={displayValue}>
+        <option className="hide-option" disabled defaultValue={displayValue}>
+          {displayValue}
         </option>
       </select>
       {isOpen && (
@@ -268,16 +307,22 @@ const SelectFilter = ({
   )
 }
 
-const FilterOptions = () => {
-  const {
-    data,
-    filters,
-    toggleActiveMediaType,
-    handleClearFilters,
-    handleSelectedFilterOption,
-  } = useExerciseContext()
+SelectFilter.propTypes = {
+  name: PropTypes.string.isRequired,
+  selectedOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onChange: PropTypes.func.isRequired,
+}
 
-  const handleChange = () => {}
+const FilterOptions = () => {
+  const { filters, handleSelectedFilterOption, filterByQuery } =
+    useExerciseContext()
+
+  const handleChange = (ev) => {
+    const searchTerm = ev.target.value
+
+    filterByQuery(searchTerm)
+  }
 
   return (
     <div className="media-block-filter-options">
@@ -296,7 +341,11 @@ const FilterOptions = () => {
         />
       </div>
       <div className="media-block-search search-input-container">
-        <input className="ui-input" onChange={handleChange}></input>
+        <input
+          placeholder="Search"
+          className="ui-input"
+          onChange={handleChange}
+        ></input>
       </div>
     </div>
   )
@@ -351,8 +400,6 @@ const ExerciseTwoComponent = () => {
     </ExerciseTwoContextProvider>
   )
 }
-
-export default ExerciseTwoComponent
 
 const ROOT_ELEMENT = document.getElementById("exercise-two-root")
 
