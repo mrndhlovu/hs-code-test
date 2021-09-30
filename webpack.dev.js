@@ -1,6 +1,6 @@
-const { merge } = require("webpack-merge");
+const { merge } = require("webpack-merge")
 
-const shared = require("./webpack.common");
+const shared = require("./webpack.common")
 
 module.exports = merge(shared, {
   mode: "development",
@@ -14,13 +14,7 @@ module.exports = merge(shared, {
       {
         test: /\.s(a|c)ss$/,
         exclude: /\.module.(s(a|c)ss)$/,
-        use: [
-          "style-loader",
-          "css-loader",
-          {
-            loader: "sass-loader",
-          },
-        ],
+        use: ["style-loader", "css-loader", "sass-loader"],
       },
     ],
   },
@@ -29,4 +23,4 @@ module.exports = merge(shared, {
     watchFiles: ["./src"],
     port: 1234,
   },
-});
+})

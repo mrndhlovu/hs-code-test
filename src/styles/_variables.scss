@@ -1,0 +1,25 @@
+$white: #fff;
+$blue: #00a4bd;
+$orange: #f56b27;
+$textGrey: #00000091;
+
+$font: (
+  primary: Roboto,
+  secondary: Montserrat,
+);
+
+$fontWeight: (
+  bold: 700,
+  medium: 300,
+  regular: 400,
+);
+
+$fontSize: (
+  default: 62.5%,
+);
+
+$device-mobile: 411px;
+$device-lgMobile: 480px;
+$device-xsMobile: 320px;
+$device-tablet: 768px;
+$device-desktop: 1024px;
